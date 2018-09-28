@@ -1,6 +1,7 @@
 
 <<<STRATEGO>>>
 
+
 User Stories:
 Each player receives the following 40 pieces (rank in parentheses), which they can arrange however they choose on their 4 x 10 side of a 10 x 10 gameboard:
 - Bomb (B) 6x; Immovable, if attacked by any piece except a Miner, attacker dies and bomb does not
@@ -33,4 +34,19 @@ Gameplay Rules:
     
     WIREFRAME
     https://i.imgur.com/YQnTYTy.jpg
+    
+    ****************************************************************************************************************************************************************
+MINIMUM VIABLE PRODUCT
+    - Basic gameboard with all the pieces numberd/labelled accordingly
+    - Messages displayed detailing each move
+    - Captured pieces/pieces no longer in play displayed
+    - Win or draw outcomes all programmed
+
+EXTRA STUFF 
+    - Gameboard backgrounds that can be selected/change randomly with each game
+    - Identifier images to display on game pieces
+    - Effects, visual and sonic, (such as explosions) when pieces move, are captured, game begins, and game ends
+    - Change game board views
+    - Players can select different colors (besides red and blue)
+    - Players can view/save log of moves after each game
 
