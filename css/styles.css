@@ -3,10 +3,24 @@
     width: 50px;
     background-color:grey;
     margin: 1px;
+    border-style: solid;
+    border-color: black;
+    opacity: .5;
+}
+.pieces {
+    display: flex;
+    justify-content: center;
 }
 .startingPiece {
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     background-color: blue;
-    margin: 2px;
+    margin: 3px;
+    align-self: center;
+}
+.game {
+    background-image: url("images/stregm.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 636px 621px;
 }
