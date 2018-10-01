@@ -116,12 +116,17 @@ for (let i = 1; i < 21; i++){
 
 // Dragging/dropping pieces function
     // Draggable 
-        // (revert: true)
-        // (connectToSortable: ".blue-side")
+        // no 2 pieces to 1 square
+        // destroy once all are placed
     
 $(".startingPiece").draggable({
-    revert: "invalid"
+    revert: "invalid",
+    snap: true,
+    snapMode: "inner",
+    snapTolerance: 30
 });
 $(".blue-side").droppable({
-    accept: (".startingPiece")
+    accept: (".startingPiece"),
+    tolerance: "fit",
+    greedy: true
 });
