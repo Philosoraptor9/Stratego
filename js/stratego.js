@@ -71,7 +71,11 @@ for(let y = 1; y < 11; y++){
         const gameSquare = $('<div/>');
         gameSquare.addClass('square');
         gameSquare.addClass(`square-${y}-${x}`);
-        $(`.game-column-${y}`).append(gameSquare)
+        $(`.game-column-${y}`).append(gameSquare);
+        $(`.square-7-${x}`).addClass('blue-side');
+        $(`.square-8-${x}`).addClass('blue-side');
+        $(`.square-9-${x}`).addClass('blue-side');
+        $(`.square-10-${x}`).addClass('blue-side');
     }
 }
 
@@ -110,6 +114,14 @@ for (let i = 1; i < 21; i++){
 }
 
 
-
+// Dragging/dropping pieces function
+    // Draggable 
+        // (revert: true)
+        // (connectToSortable: ".blue-side")
     
-
+$(".startingPiece").draggable({
+    revert: "invalid"
+});
+$(".blue-side").droppable({
+    accept: (".startingPiece")
+});
