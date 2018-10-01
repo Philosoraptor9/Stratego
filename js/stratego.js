@@ -64,6 +64,8 @@
 
 let game = {};
 
+let gameSquares = {};
+
 // on page load
 for(let y = 1; y < 11; y++){
     $('.game').append(`<div class='game-column game-column-${y}'></div>`)
@@ -76,6 +78,12 @@ for(let y = 1; y < 11; y++){
         $(`.square-8-${x}`).addClass('blue-side');
         $(`.square-9-${x}`).addClass('blue-side');
         $(`.square-10-${x}`).addClass('blue-side');
+        $(`.square-1-${x}`).addClass('red-side');
+        $(`.square-2-${x}`).addClass('red-side');
+        $(`.square-3-${x}`).addClass('red-side');
+        $(`.square-4-${x}`).addClass('red-side');
+        gameSquares[`square-${y}-${x}`] = {occupied: false};
+        console.log(gameSquares);
     }
 }
 
@@ -123,10 +131,32 @@ $(".startingPiece").draggable({
     revert: "invalid",
     snap: true,
     snapMode: "inner",
-    snapTolerance: 30
+    snapTolerance: 30,
 });
+
+// $(".startingPiece").mouseup(function() {
+//     if ($(".blue-side").occupied === true){
+//         console.log('you cant put that there')
+//     }
+// })
+
+// Droppable
+    // once piece has been placed, set gameSquares.[square-${x}-${y}].occupied to 'true', 
+    // set '.droppabale:' 'disabled' to true. if piece is moved, reset disabled to 'false'
+    // on .mouseup from 'startingpiece', change square.occupied = true;
+
 $(".blue-side").droppable({
-    accept: (".startingPiece"),
+    accept: ".startingPiece",
     tolerance: "fit",
-    greedy: true
+    greedy: true,
+    drop: function(event, ui){
+        this.occupied = true;
+        $(this).droppable('disable')
+        console.log($(ui.draggable).attr("class"))
+        if (this.occupied = false){
+            event.droppable('enable')
+            console.log('you can put that there')
+        }
+    }
 });
+
