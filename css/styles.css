@@ -4,3 +4,9 @@
     background-color:grey;
     margin: 1px;
 }
+.startingPiece {
+    height: 40px;
+    width: 40px;
+    background-color: blue;
+    margin: 2px;
+}

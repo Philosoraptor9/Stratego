@@ -1,7 +1,20 @@
 
 // Game pieces - class, fit inside game squares, number/logo on each
-    // Start out on bottom
-    // can be placed anywhere on first 4 rows
+    // Start out on bottom (2 rows of 10?) DONE
+    // label all pieces- 
+        // 8 Scouts (rank - 9)
+        // 6 Bombs (rank - B)
+        // 5 Miners (rank - 8)
+        // 4 Seargents (rank - 7)
+        // 4 Lieutenants (rank - 6)
+        // 4 Captains (rank - 5)
+        // 3 Majors (rank - 4)
+        // 2 Colonels (rank - 3)
+        // 1 General (rank - 2)
+        // 1 Marshal (rank - 1)
+        // 1 Spy (rank - S)
+        // 1 Flag (rank - F)
+    // can be clicked and dragged by user, placed anywhere on first 4 rows 
     // once all pieces are placed, game start
     // container for captured pieces
 
@@ -54,6 +67,17 @@ for(let y = 1; y < 11; y++){
         $(`.game-column-${y}`).append(gameSquare)
     }
 }
+
+for (let i = 1; i < 21; i++){
+    $('.pieces').append(`<div class ='pieces-column pieces-column-${i}'></div>`)
+    for (let j = 2; j > 0; j--){
+        const gamePiece = $('<div/>')
+        gamePiece.addClass('startingPiece')
+        gamePiece.addClass(`startingPiece-${i}-${j}`)
+        $(`.pieces-column-${i}`).append(gamePiece)
+    }
+}
+
 
 
     
