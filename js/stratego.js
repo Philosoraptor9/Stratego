@@ -97,8 +97,8 @@ for (let i = 1; i < 21; i++){
         $(`.startingPiece-9-${j}`).addClass('captain');
         $(`.startingPiece-10-${j}`).addClass('lieutenant');
         $(`.startingPiece-11-${j}`).addClass('lieutenant');
-        $(`.startingPiece-12-${j}`).addClass('seargeant');
-        $(`.startingPiece-13-${j}`).addClass('seargeant');
+        $(`.startingPiece-12-${j}`).addClass('sergeant');
+        $(`.startingPiece-13-${j}`).addClass('sergeant');
         $(`.startingPiece-14-${j}`).addClass('bomb');
         $(`.startingPiece-15-${j}`).addClass('bomb');
         $(`.startingPiece-16-${j}`).addClass('bomb');

@@ -22,5 +22,66 @@
     background-image: url("images/stregm.jpg");
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 636px 621px;
+    background-size: 640px 625px;
+}
+
+.general {
+    background-image: url("images/stratego-general.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.marshal {
+    background-image: url("images/stratego-marshal.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.spy {
+    background-image: url("images/stratego-spy.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.flag {
+    background-image: url("images/stratego-flag.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.colonel {
+    background-image: url("images/stratego-colonel.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.major {
+    background-image: url("images/stratego-major.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.miner {
+    background-image: url("images/stratego-miner.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.captain {
+    background-image: url("images/stratego-captain.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.lieutenant {
+    background-image: url("images/stratego-lieutenant.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.sergeant {
+    background-image: url("images/stratego-sergeant.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.bomb {
+    background-image: url("images/stratego-bomb.svg");
+    background-position: center center;
+    background-size: 33px 33px;
+}
+.scout {
+    background-image: url("images/stratego-scout.svg");
+    background-position: center center;
+    background-size: 33px 33px;
 }
