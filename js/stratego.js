@@ -66,9 +66,8 @@ let game = {};
 
 let gameSquares = {};
 
-let occupiedSquares = {};
+// GENERATE GAME BOARD FUNCTION
 
-// on page load
 for(let y = 1; y < 11; y++){
     $('.game').append(`<div class='game-column game-column-${y}'></div>`)
     for(let x = 10; x > 0; x--){
@@ -89,7 +88,8 @@ for(let y = 1; y < 11; y++){
     }
 }
 
-// generate pieces functions
+// GENERATE PIECES FUNCTIONS
+
 for (let i = 1; i < 21; i++){
     $('.pieces').append(`<div class ='blue-pieces-column blue-pieces-column-${i}'></div>`)
     for (let j = 2; j > 0; j--){
@@ -156,7 +156,9 @@ for (let a = 1; a < 21; a++){
     }
 }
 
-// set pieces functions
+// SET PIECES FUNCTIONS
+
+const setBlue = () => {
 $(".blue-startingPiece").draggable({
     revert: "invalid",
     snap: true,
@@ -182,7 +184,6 @@ $(".blue-side").droppable({
             // check if that square's X and Y coordinates MATCH the pieces former coordinates
             if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
                 //if this individual square is the one the piece came from...
-                console.log("FOUND THE SQUARE WE MOVED FROM")
                 $(square).droppable('enable')
                 //re-activate the square it came from to make it droppable again
             }
@@ -191,9 +192,11 @@ $(".blue-side").droppable({
         $(ui.draggable).attr('x', $(this).attr('x'))
         $(ui.draggable).attr('y', $(this).attr('y'))
         console.log($(ui.draggable))
-    }
-});
+        }
+    });
+}
 
+const setRed = () => {
 $(".red-startingPiece").draggable({
     revert: "invalid",
     snap: true,
@@ -211,12 +214,40 @@ $(".red-side").droppable({
         let formerY = $(ui.draggable).attr('y');
         $('.square').toArray().forEach((square)=>{
             if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
-                console.log("FOUND THE SQUARE WE MOVED FROM")
                 $(square).droppable('enable')
             }
         })
         $(ui.draggable).attr('x', $(this).attr('x'))
         $(ui.draggable).attr('y', $(this).attr('y'))
         console.log($(ui.draggable))
-    }
-});
+        }
+    });
+}
+
+$(".btn-blue").click(setBlue());
+$(".btn-red").click(setRed());
+
+// START GAME FUNCTIONS
+
+// const startGame = () => {
+//  $(".square").droppable({
+//     accept: ".pieces",
+//     tolerance: "fit",
+//     greedy: true,
+//     drop: function(event, ui){
+//         $(this).droppable("disable")
+//         let formerX = $(ui.draggable).attr('x');
+//         let formerY = $(ui.draggable).attr('y');
+//         $('.square').toArray().forEach((square)=>{
+//             if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
+//                 $(square).droppable('enable')
+//             }
+//         })
+//         $(ui.draggable).attr('x', $(this).attr('x'))
+//         $(ui.draggable).attr('y', $(this).attr('y'))
+//         console.log($(ui.draggable))
+//         }
+//     });
+// }
+
+// $(".btn-primary").click(startGame());
