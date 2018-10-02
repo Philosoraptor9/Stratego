@@ -66,6 +66,8 @@ let game = {};
 
 let gameSquares = {};
 
+let occupiedSquares = {};
+
 // on page load
 for(let y = 1; y < 11; y++){
     $('.game').append(`<div class='game-column game-column-${y}'></div>`)
@@ -73,6 +75,8 @@ for(let y = 1; y < 11; y++){
         const gameSquare = $('<div/>');
         gameSquare.addClass('square');
         gameSquare.addClass(`square-${y}-${x}`);
+        gameSquare.attr('x', x);
+        gameSquare.attr('y', y);
         $(`.game-column-${y}`).append(gameSquare);
         $(`.square-7-${x}`).addClass('blue-side');
         $(`.square-8-${x}`).addClass('blue-side');
@@ -82,81 +86,137 @@ for(let y = 1; y < 11; y++){
         $(`.square-2-${x}`).addClass('red-side');
         $(`.square-3-${x}`).addClass('red-side');
         $(`.square-4-${x}`).addClass('red-side');
-        gameSquares[`square-${y}-${x}`] = {occupied: false};
-        console.log(gameSquares);
     }
 }
 
-// set pieces function
+// generate pieces functions
 for (let i = 1; i < 21; i++){
     $('.pieces').append(`<div class ='pieces-column pieces-column-${i}'></div>`)
     for (let j = 2; j > 0; j--){
         const gamePiece = $('<div/>');
-        gamePiece.addClass('startingPiece');
-        gamePiece.addClass(`startingPiece-${i}-${j}`);
+        gamePiece.addClass('blue-startingPiece');
+        gamePiece.addClass(`blue-startingPiece-${i}-${j}`);
         $(`.pieces-column-${i}`).append(gamePiece);
-        $('.startingPiece-1-2').addClass('general');
-        $('.startingPiece-1-1').addClass('marshal');
-        $('.startingPiece-2-2').addClass('spy');
-        $('.startingPiece-2-1').addClass('flag');
-        $(`.startingPiece-3-${j}`).addClass('colonel');
-        $(`.startingPiece-4-${j}`).addClass('major');
-        $('.startingPiece-5-2').addClass('major');
-        $('.startingPiece-5-1').addClass('miner');
-        $(`.startingPiece-6-${j}`).addClass('miner');
-        $(`.startingPiece-7-${j}`).addClass('miner');
-        $(`.startingPiece-8-${j}`).addClass('captain');
-        $(`.startingPiece-9-${j}`).addClass('captain');
-        $(`.startingPiece-10-${j}`).addClass('lieutenant');
-        $(`.startingPiece-11-${j}`).addClass('lieutenant');
-        $(`.startingPiece-12-${j}`).addClass('sergeant');
-        $(`.startingPiece-13-${j}`).addClass('sergeant');
-        $(`.startingPiece-14-${j}`).addClass('bomb');
-        $(`.startingPiece-15-${j}`).addClass('bomb');
-        $(`.startingPiece-16-${j}`).addClass('bomb');
-        $(`.startingPiece-17-${j}`).addClass('scout');
-        $(`.startingPiece-18-${j}`).addClass('scout');
-        $(`.startingPiece-19-${j}`).addClass('scout');
-        $(`.startingPiece-20-${j}`).addClass('scout')
+        $('.blue-startingPiece-1-2').addClass('general');
+        $('.blue-startingPiece-1-1').addClass('marshal');
+        $('.blue-startingPiece-2-2').addClass('spy');
+        $('.blue-startingPiece-2-1').addClass('flag');
+        $(`.blue-startingPiece-3-${j}`).addClass('colonel');
+        $(`.blue-startingPiece-4-${j}`).addClass('major');
+        $('.blue-startingPiece-5-2').addClass('major');
+        $('.blue-startingPiece-5-1').addClass('miner');
+        $(`.blue-startingPiece-6-${j}`).addClass('miner');
+        $(`.blue-startingPiece-7-${j}`).addClass('miner');
+        $(`.blue-startingPiece-8-${j}`).addClass('captain');
+        $(`.blue-startingPiece-9-${j}`).addClass('captain');
+        $(`.blue-startingPiece-10-${j}`).addClass('lieutenant');
+        $(`.blue-startingPiece-11-${j}`).addClass('lieutenant');
+        $(`.blue-startingPiece-12-${j}`).addClass('sergeant');
+        $(`.blue-startingPiece-13-${j}`).addClass('sergeant');
+        $(`.blue-startingPiece-14-${j}`).addClass('bomb');
+        $(`.blue-startingPiece-15-${j}`).addClass('bomb');
+        $(`.blue-startingPiece-16-${j}`).addClass('bomb');
+        $(`.blue-startingPiece-17-${j}`).addClass('scout');
+        $(`.blue-startingPiece-18-${j}`).addClass('scout');
+        $(`.blue-startingPiece-19-${j}`).addClass('scout');
+        $(`.blue-startingPiece-20-${j}`).addClass('scout')
     }
 }
 
+for (let a = 1; a < 21; a++){
+    $('.pieces').append(`<div class ='pieces-column pieces-column-${a}'></div>`)
+    for (let b = 2; b > 0; b--){
+        const gamePiece = $('<div/>');
+        gamePiece.addClass('red-startingPiece');
+        gamePiece.addClass(`red-startingPiece-${a}-${b}`);
+        $(`.pieces-column-${a}`).append(gamePiece);
+        $('.red-startingPiece-1-2').addClass('general');
+        $('.red-startingPiece-1-1').addClass('marshal');
+        $('.red-startingPiece-2-2').addClass('spy');
+        $('.red-startingPiece-2-1').addClass('flag');
+        $(`.red-startingPiece-3-${b}`).addClass('colonel');
+        $(`.red-startingPiece-4-${b}`).addClass('major');
+        $('.red-startingPiece-5-2').addClass('major');
+        $('.red-startingPiece-5-1').addClass('miner');
+        $(`.red-startingPiece-6-${b}`).addClass('miner');
+        $(`.red-startingPiece-7-${b}`).addClass('miner');
+        $(`.red-startingPiece-8-${b}`).addClass('captain');
+        $(`.red-startingPiece-9-${b}`).addClass('captain');
+        $(`.red-startingPiece-10-${b}`).addClass('lieutenant');
+        $(`.red-startingPiece-11-${b}`).addClass('lieutenant');
+        $(`.red-startingPiece-12-${b}`).addClass('sergeant');
+        $(`.red-startingPiece-13-${b}`).addClass('sergeant');
+        $(`.red-startingPiece-14-${b}`).addClass('bomb');
+        $(`.red-startingPiece-15-${b}`).addClass('bomb');
+        $(`.red-startingPiece-16-${b}`).addClass('bomb');
+        $(`.red-startingPiece-17-${b}`).addClass('scout');
+        $(`.red-startingPiece-18-${b}`).addClass('scout');
+        $(`.red-startingPiece-19-${b}`).addClass('scout');
+        $(`.red-startingPiece-20-${b}`).addClass('scout')
+    }
+}
 
-// Dragging/dropping pieces function
-    // Draggable 
-        // no 2 pieces to 1 square
-        // destroy once all are placed
-    
-$(".startingPiece").draggable({
+// set pieces functions
+$(".blue-startingPiece").draggable({
     revert: "invalid",
     snap: true,
     snapMode: "inner",
-    snapTolerance: 30,
+    snapTolerance: 30
 });
-
-// $(".startingPiece").mouseup(function() {
-//     if ($(".blue-side").occupied === true){
-//         console.log('you cant put that there')
-//     }
-// })
-
-// Droppable
-    // once piece has been placed, set gameSquares.[square-${x}-${y}].occupied to 'true', 
-    // set '.droppabale:' 'disabled' to true. if piece is moved, reset disabled to 'false'
-    // on .mouseup from 'startingpiece', change square.occupied = true;
-
+  
 $(".blue-side").droppable({
-    accept: ".startingPiece",
+    accept: ".blue-startingPiece",
     tolerance: "fit",
     greedy: true,
     drop: function(event, ui){
-        this.occupied = true;
-        $(this).droppable('disable')
-        console.log($(ui.draggable).attr("class"))
-        if (this.occupied = false){
-            event.droppable('enable')
-            console.log('you can put that there')
-        }
+        // disable the current square
+        $(this).droppable("disable")
+        // grab the X coordinate of the PIECE that was dropped onto the square
+        let formerX = $(ui.draggable).attr('x');
+        // grab the Y coordinate of the piece that was dropped
+        let formerY = $(ui.draggable).attr('y');
+        // loop over ALL the squares
+        $('.square').toArray().forEach((square)=>{
+            //inside this function, the square variable represents each individual square
+            // we use the $(square) to access with jquery each individual square
+            // check if that square's X and Y coordinates MATCH the pieces former coordinates
+            if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
+                //if this individual square is the one the piece came from...
+                console.log("FOUND THE SQUARE WE MOVED FROM")
+                $(square).droppable('enable')
+                //re-activate the square it came from to make it droppable again
+            }
+        })
+        //now, give the PIECE the new x and y coordinates of the square its being dropped onto
+        $(ui.draggable).attr('x', $(this).attr('x'))
+        $(ui.draggable).attr('y', $(this).attr('y'))
+        console.log($(ui.draggable))
     }
 });
 
+$(".red-startingPiece").draggable({
+    revert: "invalid",
+    snap: true,
+    snapMode: "inner",
+    snapTolerance: 30
+});
+
+$(".red-side").droppable({
+    accept: ".red-startingPiece",
+    tolerance: "fit",
+    greedy: true,
+    drop: function(event, ui){
+        $(this).droppable("disable")
+        let formerX = $(ui.draggable).attr('x');
+        let formerY = $(ui.draggable).attr('y');
+        $('.square').toArray().forEach((square)=>{
+            if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
+                console.log("FOUND THE SQUARE WE MOVED FROM")
+                $(square).droppable('enable')
+            }
+        })
+        $(ui.draggable).attr('x', $(this).attr('x'))
+        $(ui.draggable).attr('y', $(this).attr('y'))
+        console.log($(ui.draggable))
+    }
+});

@@ -11,12 +11,19 @@
     display: flex;
     justify-content: center;
 }
-.startingPiece {
+.blue-startingPiece {
     height: 35px;
     width: 35px;
     background-color: blue;
     margin: 3px;
-    align-self: center;
+    align-self: left;
+}
+.red-startingPiece {
+    height: 35px;
+    width: 35px;
+    background-color: red;
+    margin: 3px;
+    align-self: right;
 }
 .game {
     background-image: url("images/stregm.jpg");
