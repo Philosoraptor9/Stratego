@@ -7,7 +7,7 @@
     border-color: black;
     opacity: .5;
 }
-.pieces {
+.blue-pieces {
     display: flex;
     justify-content: center;
 }

@@ -91,12 +91,12 @@ for(let y = 1; y < 11; y++){
 
 // generate pieces functions
 for (let i = 1; i < 21; i++){
-    $('.pieces').append(`<div class ='pieces-column pieces-column-${i}'></div>`)
+    $('.pieces').append(`<div class ='blue-pieces-column blue-pieces-column-${i}'></div>`)
     for (let j = 2; j > 0; j--){
         const gamePiece = $('<div/>');
         gamePiece.addClass('blue-startingPiece');
         gamePiece.addClass(`blue-startingPiece-${i}-${j}`);
-        $(`.pieces-column-${i}`).append(gamePiece);
+        $(`.blue-pieces-column-${i}`).append(gamePiece);
         $('.blue-startingPiece-1-2').addClass('general');
         $('.blue-startingPiece-1-1').addClass('marshal');
         $('.blue-startingPiece-2-2').addClass('spy');
@@ -124,12 +124,12 @@ for (let i = 1; i < 21; i++){
 }
 
 for (let a = 1; a < 21; a++){
-    $('.pieces').append(`<div class ='pieces-column pieces-column-${a}'></div>`)
+    $('.pieces').append(`<div class ='red-pieces-column red-pieces-column-${a}'></div>`)
     for (let b = 2; b > 0; b--){
         const gamePiece = $('<div/>');
         gamePiece.addClass('red-startingPiece');
         gamePiece.addClass(`red-startingPiece-${a}-${b}`);
-        $(`.pieces-column-${a}`).append(gamePiece);
+        $(`.red-pieces-column-${a}`).append(gamePiece);
         $('.red-startingPiece-1-2').addClass('general');
         $('.red-startingPiece-1-1').addClass('marshal');
         $('.red-startingPiece-2-2').addClass('spy');
