@@ -33,6 +33,58 @@ let game = {};
 
 let gameSquares = {};
 
+class Soldier {
+    constructor(name, rank){
+    this.name = name,
+    this.rank = rank;
+    }
+    mobility() {
+        console.log(`${this.name} IS MOVING`)
+    }
+}
+
+// Mobility (method?) for all will be same - 1 space forward, back, left, or right. 
+    // Only exception is Scout (extend class?) who can move any amount of spaces in same directions
+    // Class that extends 'Soldier' for multiple-piece ranks? i.e. everything except General/Marshal/Spy
+
+const marshal = new Soldier("Marshal", 1);
+const general = new Soldier("General", 2);
+const colonel = new Soldier("Colonel", 3);
+const major = new Soldier("Major", 4);
+const captain = new Soldier("Captain", 5);
+const lieutenant = new Soldier("Lieutenant", 6);
+const seargent = new Soldier("Seargent", 7);
+const miner = new Soldier("Miner", 8);
+const scout = new Soldier("Scout", 9);
+const spy = new Soldier("Spy", 10)
+
+
+class Device {
+    constructor(name, rank){
+        this.name = name,
+        this.rank = rank;
+    }
+    effect() {
+        console.log(`YOU RAN INTO ${this.name}`)
+    }
+}
+
+const flag = new Device("Flag", 0);
+const bomb = new Device("Bomb", 11);
+
+// Mobility for these will be 0 or null
+// Rank for Flag will be 0 since it can be captured by all Soldier pieces, and include a method to end game
+// Rank for Bomb will transcend all soldier pieces except Miner
+
+// Questions for Ryan:
+    // What is the best way to store values for gameplay? I was thinking an array that contains each square,
+    // whether or not it is occupied, and if it is, the piece occupying it. Is this possible and/or practical?
+    // Would an array or an object work best? Would I need multiple?
+    // There are several scenarios for a tie game. Could I write these as functions and set event listeners to 
+    // call on them when certain piece combinations and/or gameboard configurations occur?
+    // How do I hide one side's pieces while the other side is setting up?
+    // I am assuming this will be player vs. computer. If not... lots more questions!
+
 // GENERATE GAME BOARD FUNCTION
 
 for(let y = 1; y < 11; y++){
@@ -228,8 +280,7 @@ $(".pieces").draggable({
     });
 }
 
-// Making it so you can't drop pieces anywhere?? Why????
-// Add if condition to check if all blue-side and red-side are occupied
+// Add if condition to check if all blue-side and red-side are fully set, display message if not
 
 $(".btn-primary").on("click", startGame);
 
