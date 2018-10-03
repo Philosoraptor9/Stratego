@@ -29,39 +29,6 @@
         // clicks square they want piece to move to
         // move recorded in a message
 
-// Move if checks 
-    // if player moves to a space with piece on same team already there, not allowed, choose another move
-    // if player moves to a space in a lake, not allowed, choose another move
-    // if player tries to move diagonally, move not allowed, choose another move
-    // if player (besides scout) tries to move more than once space, not allowed, choose another move
-    // if player tries to move bomb, not allowed, choose another move
-    // if player tries to move flag, not allowed, choose another move
-    
-//Attack if checks
-    // if player moves to a space occupied by opponent, attack function initiated
-    // 2 pieces compared, both player see both pieces
-    // piece with higher rank wins. piece with lower rank removed from play, put in captured pieces container
-        // unless it's a spy attacking a marshal or general, then spy wins
-    // if player moves to a space occupied by a bomb, that piece removed, put in captured pieces container
-        // unless it's a miner, then bomb removed, put in captured pieces container 
-    // if player moves to space occupied by flag, game over. player wins
-
-// Tie game scenarios
-    // 1. Each Flag is surrounded by bombs and neither player has a miner, and there are insufficient number of 
-    // moveable pieces or of insufficient rank for either player to corner and capture all of the opponent's 
-    // moveable pieces (automatic draw);
-    // 2. An opponent's Flag is exposed, but the player has only one moveable piece, the opponent has 
-    // only one moveable piece but of a higher rank and it guards the Flag, so that it is impossible for the player 
-    // to either capture the Flag or the higher ranked piece (automatic draw);
-    // 3. It is possible for both players to have one mobile piece remaining, and they are of equal rank. If one 
-    // piece strikes the other, both are removed, leaving no mobile pieces on the board. (automatic draw).
-    // 4. There are a few "indian stand-off" situations, where one or more pairs of pieces shuffle around endlessly 
-    // in order to maintain some advantage or prevent some advantage by the opponent, and no progress can be made 
-    // (players choose to declare draw);
-
-    // Other stuff
-        // Game board and pieces should SHRINK and maintain shape when page is minimized, not collapse
-
 let game = {};
 
 let gameSquares = {};
@@ -159,6 +126,7 @@ for (let a = 1; a < 21; a++){
 // SET PIECES FUNCTIONS
 
 const setBlue = () => {
+    console.log('Blue team, set your pieces')
 $(".blue-startingPiece").draggable({
     revert: "invalid",
     snap: true,
@@ -197,6 +165,7 @@ $(".blue-side").droppable({
 }
 
 const setRed = () => {
+    console.log('Red team, set your pieces')
 $(".red-startingPiece").draggable({
     revert: "invalid",
     snap: true,
@@ -205,7 +174,7 @@ $(".red-startingPiece").draggable({
 });
 
 $(".red-side").droppable({
-    accept: ".red-startingPiece",
+    accept: ".red-startingPiece", 
     tolerance: "fit",
     greedy: true,
     drop: function(event, ui){
@@ -224,30 +193,82 @@ $(".red-side").droppable({
     });
 }
 
-$(".btn-blue").click(setBlue());
-$(".btn-red").click(setRed());
+$(".blue-btn").on("click", setBlue);
+$(".red-btn").on("click", setRed);
 
+// once all of the pieces are set...
 // START GAME FUNCTIONS
 
-// const startGame = () => {
-//  $(".square").droppable({
-//     accept: ".pieces",
-//     tolerance: "fit",
-//     greedy: true,
-//     drop: function(event, ui){
-//         $(this).droppable("disable")
-//         let formerX = $(ui.draggable).attr('x');
-//         let formerY = $(ui.draggable).attr('y');
-//         $('.square').toArray().forEach((square)=>{
-//             if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
-//                 $(square).droppable('enable')
-//             }
-//         })
-//         $(ui.draggable).attr('x', $(this).attr('x'))
-//         $(ui.draggable).attr('y', $(this).attr('y'))
-//         console.log($(ui.draggable))
-//         }
-//     });
-// }
+const startGame = () => {
+    console.log('Both armies are set. Blue team, begin the game')
+$(".pieces").draggable({
+    revert: "invalid",
+    snap: true,
+    snapMode: "inner",
+    snapTolerance: 30
+});
 
-// $(".btn-primary").click(startGame());
+ $(".square").droppable({
+    accept: ".blue-startingPiece, .red-startingPiece",
+    tolerance: "fit",
+    greedy: true,
+    drop: function(event, ui){
+        $(this).droppable("disable")
+        let formerX = $(ui.draggable).attr('x');
+        let formerY = $(ui.draggable).attr('y');
+        $('.square').toArray().forEach((square)=>{
+            if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
+                $(square).droppable('enable')
+            }
+        })
+        $(ui.draggable).attr('x', $(this).attr('x'))
+        $(ui.draggable).attr('y', $(this).attr('y'))
+        console.log($(ui.draggable))
+        }
+    });
+}
+
+// Making it so you can't drop pieces anywhere?? Why????
+// Add if condition to check if all blue-side and red-side are occupied
+
+$(".btn-primary").on("click", startGame);
+
+// Pieces
+    // Objects: class for immovable (flag & bomb), class for movable (all other pieces)... separate Scouts?
+    // Array for each player's pieces in play
+    // Array for each player's captured pieces
+    // Array for occupied squares on the board
+    // Array for unoccupied squares on the board
+
+// Move if checks 
+    // if player moves to a space with piece on same team already there, not allowed, choose another move
+    // if player moves to a space in a lake, not allowed, choose another move
+    // if player tries to move diagonally, move not allowed, choose another move
+    // if player (besides scout) tries to move more than once space, not allowed, choose another move
+    // if player tries to move bomb, not allowed, choose another move
+    // if player tries to move flag, not allowed, choose another move
+    
+// Attack if checks
+    // if player moves to a space occupied by opponent, attack function initiated
+    // 2 pieces compared, both player see both pieces
+    // piece with higher rank wins. piece with lower rank removed from play, put in captured pieces container
+        // unless it's a spy attacking a marshal or general, then spy wins
+    // if player moves to a space occupied by a bomb, that piece removed, put in captured pieces container
+        // unless it's a miner, then bomb removed, put in captured pieces container 
+    // if player moves to space occupied by flag, game over. player wins
+
+// Tie game scenarios
+    // 1. Each Flag is surrounded by bombs and neither player has a miner, and there are insufficient number of 
+    // moveable pieces or of insufficient rank for either player to corner and capture all of the opponent's 
+    // moveable pieces (automatic draw);
+    // 2. An opponent's Flag is exposed, but the player has only one moveable piece, the opponent has 
+    // only one moveable piece but of a higher rank and it guards the Flag, so that it is impossible for the player 
+    // to either capture the Flag or the higher ranked piece (automatic draw);
+    // 3. It is possible for both players to have one mobile piece remaining, and they are of equal rank. If one 
+    // piece strikes the other, both are removed, leaving no mobile pieces on the board. (automatic draw).
+    // 4. There are a few "indian stand-off" situations, where one or more pairs of pieces shuffle around endlessly 
+    // in order to maintain some advantage or prevent some advantage by the opponent, and no progress can be made 
+    // (players choose to declare draw);
+
+// Other stuff
+    // Game board and pieces should SHRINK and maintain shape when page is minimized, not collapse
