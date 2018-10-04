@@ -1,34 +1,4 @@
 
-// Game pieces - class, fit inside game squares, number/logo on each
-    // Start out on bottom (2 rows of 10?) DONE
-    // label all pieces- 
-        // 8 Scouts (rank - 2) DONE
-        // 6 Bombs (rank - 11) DONE
-        // 5 Miners (rank - 3) DONE
-        // 4 Seargents (rank - 4) DONE
-        // 4 Lieutenants (rank - 5) DONE
-        // 4 Captains (rank - 6) DONE
-        // 3 Majors (rank - 7) DONE
-        // 2 Colonels (rank - 8) DONE
-        // 1 General (rank - 9) DONE
-        // 1 Marshal (rank - 10) DONE
-        // 1 Spy (rank - 1) DONE
-        // 1 Flag (rank - 0) DONE
-    // can be clicked and dragged by user, placed anywhere on first 4 rows
-    // player 2 cannot see player 1 set their pieces 
-    // once all pieces are placed, game start
-    // container for captured pieces
-
-// Game start - function, button
-    // Player 1 moves - function, onclick
-        // clicks piece
-        // clicks square they want piece to move to
-        // move recorded in a message
-    // Player 2 moves - function, onclick
-        // clicks piece
-        // clicks square they want piece to move to
-        // move recorded in a message
-
 let game = {};
 
 let gameBoard;
@@ -47,26 +17,6 @@ const ranks = {
     spy: 1,
     flag: 0
 }
-
-// Object for ranks
-
-// Mobility (method?) for all will be same - 1 space forward, back, left, or right. 
-    // Only exception is Scout who can move any amount of spaces in same directions
-    // Class that extends 'Soldier' for multiple-piece ranks? i.e. everything except General/Marshal/Spy
-
-// These pieces can't move once set
-// Rank for Flag will be 0 since it can be captured by all Soldier pieces, and include a method to end game
-// Rank for Bomb will transcend all soldier pieces except Miner
-
-// Questions for Ryan:
-    // How do I link js objects with html elements?
-    // What is the best way to store values for gameplay? I was thinking an array that contains each square,
-    // whether or not it is occupied, and if it is, the piece occupying it. Is this possible and/or practical?
-    // There are several scenarios for a tie game. Could I write these as functions and set event listeners to 
-    // call on them when certain piece combinations and/or gameboard configurations occur?
-    // How do I hide one side's pieces while the other side is setting up?
-    // How do I make pieces shrink with gameboard when page is collapsed?
-    // I am assuming this will be player vs. computer. If not... lots more questions!
 
 // GENERATE GAME BOARD FUNCTION
 
@@ -104,26 +54,47 @@ for (let i = 1; i < 21; i++){
         $('.blue-startingPiece-1-1').addClass('marshal');
         $('.blue-startingPiece-1-1').attr("rank", ranks.marshal);
         $('.blue-startingPiece-2-2').addClass('spy');
+        $('.blue-startingPiece-2-2').attr("rank", ranks.spy);
         $('.blue-startingPiece-2-1').addClass('flag');
+        $('.blue-startingPiece-2-1').attr("rank", ranks.flag);
         $(`.blue-startingPiece-3-${j}`).addClass('colonel');
+        $(`.blue-startingPiece-3-${j}`).attr("rank", ranks.colonel);
         $(`.blue-startingPiece-4-${j}`).addClass('major');
+        $(`.blue-startingPiece-4-${j}`).attr("rank", ranks.major);
         $('.blue-startingPiece-5-2').addClass('major');
+        $('.blue-startingPiece-5-2').attr("rank", ranks.major);
         $('.blue-startingPiece-5-1').addClass('miner');
+        $('.blue-startingPiece-5-1').attr("rank", ranks.miner);
         $(`.blue-startingPiece-6-${j}`).addClass('miner');
+        $(`.blue-startingPiece-6-${j}`).attr("rank", ranks.miner);
         $(`.blue-startingPiece-7-${j}`).addClass('miner');
+        $(`.blue-startingPiece-7-${j}`).attr("rank", ranks.miner);
         $(`.blue-startingPiece-8-${j}`).addClass('captain');
+        $(`.blue-startingPiece-8-${j}`).attr("rank", ranks.captain);
         $(`.blue-startingPiece-9-${j}`).addClass('captain');
+        $(`.blue-startingPiece-9-${j}`).attr("rank", ranks.captain);
         $(`.blue-startingPiece-10-${j}`).addClass('lieutenant');
+        $(`.blue-startingPiece-10-${j}`).attr("rank", ranks.lieutenant);
         $(`.blue-startingPiece-11-${j}`).addClass('lieutenant');
+        $(`.blue-startingPiece-11-${j}`).attr("rank", ranks.lieutenant);
         $(`.blue-startingPiece-12-${j}`).addClass('sergeant');
+        $(`.blue-startingPiece-12-${j}`).attr("rank", ranks.seargent);
         $(`.blue-startingPiece-13-${j}`).addClass('sergeant');
+        $(`.blue-startingPiece-13-${j}`).attr("rank", ranks.seargent);
         $(`.blue-startingPiece-14-${j}`).addClass('bomb');
+        $(`.blue-startingPiece-14-${j}`).attr("rank", ranks.bomb);
         $(`.blue-startingPiece-15-${j}`).addClass('bomb');
+        $(`.blue-startingPiece-15-${j}`).attr("rank", ranks.bomb);
         $(`.blue-startingPiece-16-${j}`).addClass('bomb');
+        $(`.blue-startingPiece-16-${j}`).attr("rank", ranks.bomb);
         $(`.blue-startingPiece-17-${j}`).addClass('scout');
+        $(`.blue-startingPiece-17-${j}`).attr("rank", ranks.scout);
         $(`.blue-startingPiece-18-${j}`).addClass('scout');
+        $(`.blue-startingPiece-18-${j}`).attr("rank", ranks.scout);
         $(`.blue-startingPiece-19-${j}`).addClass('scout');
-        $(`.blue-startingPiece-20-${j}`).addClass('scout')
+        $(`.blue-startingPiece-19-${j}`).attr("rank", ranks.scout);
+        $(`.blue-startingPiece-20-${j}`).addClass('scout');
+        $(`.blue-startingPiece-20-${j}`).attr("rank", ranks.scout);
     }
 }
 
@@ -139,101 +110,51 @@ for (let a = 1; a < 21; a++){
         $('.red-startingPiece-1-1').addClass('marshal');
         $('.red-startingPiece-1-1').attr("rank", ranks.marshal);
         $('.red-startingPiece-2-2').addClass('spy');
+        $('.red-startingPiece-2-2').attr("rank", ranks.spy);
         $('.red-startingPiece-2-1').addClass('flag');
+        $('.red-startingPiece-2-1').attr("rank", ranks.flag);
         $(`.red-startingPiece-3-${b}`).addClass('colonel');
+        $(`.red-startingPiece-3-${b}`).attr("rank", ranks.colonel);
         $(`.red-startingPiece-4-${b}`).addClass('major');
+        $(`.red-startingPiece-4-${b}`).attr("rank", ranks.major);
         $('.red-startingPiece-5-2').addClass('major');
+        $('.red-startingPiece-5-2').attr("rank", ranks.major);
         $('.red-startingPiece-5-1').addClass('miner');
+        $('.red-startingPiece-5-1').attr("rank", ranks.miner);
         $(`.red-startingPiece-6-${b}`).addClass('miner');
+        $(`.red-startingPiece-6-${b}`).attr("rank", ranks.miner);
         $(`.red-startingPiece-7-${b}`).addClass('miner');
+        $(`.red-startingPiece-7-${b}`).attr("rank", ranks.miner);
         $(`.red-startingPiece-8-${b}`).addClass('captain');
+        $(`.red-startingPiece-8-${b}`).attr("rank", ranks.captain);
         $(`.red-startingPiece-9-${b}`).addClass('captain');
+        $(`.red-startingPiece-9-${b}`).attr("rank", ranks.captain);
         $(`.red-startingPiece-10-${b}`).addClass('lieutenant');
+        $(`.red-startingPiece-10-${b}`).attr("rank", ranks.lieutenant);
         $(`.red-startingPiece-11-${b}`).addClass('lieutenant');
+        $(`.red-startingPiece-11-${b}`).attr("rank", ranks.lieutenant);
         $(`.red-startingPiece-12-${b}`).addClass('sergeant');
+        $(`.red-startingPiece-12-${b}`).attr("rank", ranks.seargent);
         $(`.red-startingPiece-13-${b}`).addClass('sergeant');
+        $(`.red-startingPiece-13-${b}`).attr("rank", ranks.seargent);
         $(`.red-startingPiece-14-${b}`).addClass('bomb');
+        $(`.red-startingPiece-14-${b}`).attr("rank", ranks.bomb);
         $(`.red-startingPiece-15-${b}`).addClass('bomb');
+        $(`.red-startingPiece-15-${b}`).attr("rank", ranks.bomb);
         $(`.red-startingPiece-16-${b}`).addClass('bomb');
+        $(`.red-startingPiece-16-${b}`).attr("rank", ranks.bomb);
         $(`.red-startingPiece-17-${b}`).addClass('scout');
+        $(`.red-startingPiece-17-${b}`).attr("rank", ranks.scout);
         $(`.red-startingPiece-18-${b}`).addClass('scout');
+        $(`.red-startingPiece-18-${b}`).attr("rank", ranks.scout);
         $(`.red-startingPiece-19-${b}`).addClass('scout');
+        $(`.red-startingPiece-19-${b}`).attr("rank", ranks.scout);
         $(`.red-startingPiece-20-${b}`).addClass('scout')
+        $(`.red-startingPiece-20-${b}`).attr("rank", ranks.scout);
     }
 }
 
-// SET PIECES FUNCTIONS
-
-const setBlue = () => {
-    console.log('Blue team, set your pieces')
-$(".blue-startingPiece").draggable({
-    revert: "invalid",
-    snap: true,
-    snapMode: "inner",
-    snapTolerance: 30
-});
-  
-$(".blue-side").droppable({
-    accept: ".blue-startingPiece",
-    tolerance: "fit",
-    greedy: true,
-    drop: function(event, ui){
-        // disable the current square
-        $(this).droppable("disable")
-        // grab the X coordinate of the PIECE that was dropped onto the square
-        let formerX = $(ui.draggable).attr('x');
-        // grab the Y coordinate of the piece that was dropped
-        let formerY = $(ui.draggable).attr('y');
-        // loop over ALL the squares
-        $('.square').toArray().forEach((square)=>{
-            //inside this function, the square variable represents each individual square
-            // we use the $(square) to access with jquery each individual square
-            // check if that square's X and Y coordinates MATCH the pieces former coordinates
-            if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
-                //if this individual square is the one the piece came from...
-                $(square).droppable('enable')
-                //re-activate the square it came from to make it droppable again
-            }
-        })
-        //now, give the PIECE the new x and y coordinates of the square its being dropped onto
-        $(ui.draggable).attr('x', $(this).attr('x'))
-        $(ui.draggable).attr('y', $(this).attr('y'))
-        }
-    });
-}
-
-const setRed = () => {
-    console.log('Red team, set your pieces')
-$(".red-startingPiece").draggable({
-    revert: "invalid",
-    snap: true,
-    snapMode: "inner",
-    snapTolerance: 30
-});
-
-$(".red-side").droppable({
-    accept: ".red-startingPiece", 
-    tolerance: "fit",
-    greedy: true,
-    drop: function(event, ui){
-        $(this).droppable("disable")
-        let formerX = $(ui.draggable).attr('x');
-        let formerY = $(ui.draggable).attr('y');
-        $('.square').toArray().forEach((square)=>{
-            if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
-                $(square).droppable('enable')
-            }
-        })
-        $(ui.draggable).attr('x', $(this).attr('x'))
-        $(ui.draggable).attr('y', $(this).attr('y'))
-        }
-    });
-}
-
-$(".blue-btn").on("click", setBlue);
-$(".red-btn").on("click", setRed);
-
-// once all of the pieces are set...
+// GAMEPLAY PRECURSORS
 
 const dropCheck = (piece) => {
     let formerX = $(piece).attr('x');
@@ -266,6 +187,50 @@ $(".square").droppable({
     });
 }
 
+// SET PIECES FUNCTIONS
+
+const setBlue = () => {
+    console.log('Blue team, set your pieces')
+$(".blue-startingPiece").draggable({
+    revert: "invalid",
+    snap: true,
+    snapMode: "inner",
+    snapTolerance: 30
+});
+  
+$(".blue-side").droppable({
+    accept: ".blue-startingPiece",
+    tolerance: "fit",
+    greedy: true,
+    drop: (event, ui) => {
+        dropCheck(ui.draggable)
+        }
+    });
+}
+
+const setRed = () => {
+    console.log('Red team, set your pieces')
+$(".red-startingPiece").draggable({
+    revert: "invalid",
+    snap: true,
+    snapMode: "inner",
+    snapTolerance: 30
+});
+
+$(".red-side").droppable({
+    accept: ".red-startingPiece", 
+    tolerance: "fit",
+    greedy: true,
+    drop: (event, ui) => {
+        dropCheck(ui.draggable)
+        }
+    });
+}
+
+$(".blue-btn").on("click", setBlue);
+$(".red-btn").on("click", setRed);
+
+// once all of the pieces are set...
 // START GAME FUNCTIONS
 
 const startGame = () => {
@@ -321,7 +286,6 @@ $(".red-startingPiece").droppable({
 }
 
 $(".blue-attack-btn").on("click", blueAttack);
-// How do I re-activate droppable on the square left by the attacker?
 
 const redAttack = () => {
 console.log("Red is attacking!")
@@ -341,12 +305,15 @@ $(".blue-startingPiece").droppable({
         let defender = $(this);
         if (parseInt(attacker.attr("rank")) > parseInt(defender.attr("rank"))) {
             $(this).remove();
+            dropCheck(ui.draggable);
         } else if (parseInt(attacker.attr("rank")) === parseInt(defender.attr("rank"))) {
             $(this).remove();
             $(ui.draggable).remove();
+            dropCheck();
         } else {
             $(ui.draggable).remove();
-        }
+            dropCheck(defender);
+        } 
            console.log(event.target);    
            console.log(attacker.attr("rank"));
            console.log($(this).attr('rank'));  
@@ -377,11 +344,6 @@ $(".red-attack-btn").on("click", redAttack);
 // });
 // }
 
-// Attack function built into droppable, accepts opposite color's pieces
-    // switch droppable back on square left
-    // append captured piece to where ever I want to put it
-// Switch draggable and droppable at end of each attack
-
 // Move if checks 
     // if player moves to a space with piece on same team already there, not allowed, choose another move
     // if player moves to a space in a lake, not allowed, choose another move
@@ -389,15 +351,6 @@ $(".red-attack-btn").on("click", redAttack);
     // if player (besides scout) tries to move more than once space, not allowed, choose another move
     // if player tries to move bomb, not allowed, choose another move
     // if player tries to move flag, not allowed, choose another move
-    
-// Attack if checks
-    // if player moves to a space occupied by opponent, attack function initiated
-    // 2 pieces compared, both player see both pieces
-    // piece with higher rank wins. piece with lower rank removed from play, put in captured pieces container
-        // unless it's a spy attacking a marshal or general, then spy wins
-    // if player moves to a space occupied by a bomb, that piece removed, put in captured pieces container
-        // unless it's a miner, then bomb removed, put in captured pieces container 
-    // if player moves to space occupied by flag, game over. player wins
 
 // Tie game scenarios
     // 1. Each Flag is surrounded by bombs and neither player has a miner, and there are insufficient number of 
