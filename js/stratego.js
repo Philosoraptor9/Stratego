@@ -234,6 +234,38 @@ $(".blue-btn").on("click", setBlue);
 $(".red-btn").on("click", setRed);
 
 // once all of the pieces are set...
+
+const dropCheck = (piece) => {
+    let formerX = $(piece).attr('x');
+    let formerY = $(piece).attr('y');
+    $('.square').toArray().forEach((square) => {
+        if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
+            $(square).droppable('enable')
+            console.log($(square))
+        }
+    })
+    $(piece).attr('x', $(this).attr('x'))
+    $(piece).attr('y', $(this).attr('y'))
+}
+
+const moveNoAttack = () => {
+$(".pieces").draggable({
+    revert: "invalid",
+    snap: true,
+    snapMode: "inner",
+    snapTolerance: 30
+});
+
+$(".square").droppable({
+    accept: ".blue-startingPiece, .red-startingPiece",
+    tolerance: "fit",
+    greedy: true,
+    drop: (event, ui) => {
+        dropCheck(ui.draggable)
+        }
+    });
+}
+
 // START GAME FUNCTIONS
 
 const startGame = () => {
@@ -244,40 +276,23 @@ $(".pieces").draggable({
     snapMode: "inner",
     snapTolerance: 30
 });
-
- $(".square").droppable({
-    accept: ".blue-startingPiece, .red-startingPiece",
-    tolerance: "fit",
-    greedy: true,
-    drop: function(target, ui){
-        $(this).droppable("disable")
-        let formerX = $(ui.draggable).attr('x');
-        let formerY = $(ui.draggable).attr('y');
-        $('.square').toArray().forEach((square)=>{
-            if($(square).attr('x') == formerX && $(square).attr('y') == formerY){
-                $(square).droppable('enable')
-            }
-        })
-        $(ui.draggable).attr('x', $(this).attr('x'))
-        $(ui.draggable).attr('y', $(this).attr('y'))
-        // console.log(target);
-        // console.log($(ui.draggable));
-        }
-    });
+moveNoAttack();
 }
 
 $(".btn-primary").on("click", startGame);
 
-
 // ATTACK FUNCTIONS
+// if square is not occupied, call moveNoAttack
+// if square is occupied (ui-droppable-disabled) by an opposing piece, call [color]Attack
+// if square is occupied by a piece of same color, revert
 
-const blueAttack = () => {
+const blueAttack = () => {    
 console.log("Blue is attacking!")
 $(".blue-startingPiece").draggable({
-        revert: "invalid",
-        snap: true,
-        snapMode: "inner",
-        snapTolerance: 30
+    revert: "invalid",
+    snap: true,
+    snapMode: "inner",
+    snapTolerance: 30
 });
 
 $(".red-startingPiece").droppable({
@@ -289,20 +304,24 @@ $(".red-startingPiece").droppable({
         let defender = $(this);
         if (parseInt(attacker.attr("rank")) > parseInt(defender.attr("rank"))) {
             $(this).remove();
+            dropCheck(ui.draggable);
         } else if (parseInt(attacker.attr("rank")) === parseInt(defender.attr("rank"))) {
             $(this).remove();
             $(ui.draggable).remove();
+            dropCheck();
         } else {
             $(ui.draggable).remove();
-        }
+            dropCheck(defender);
+        } 
            console.log(event.target);    
            console.log(attacker.attr("rank"));
            console.log($(this).attr('rank'));  
         }
-    })
+    }); 
 }
 
 $(".blue-attack-btn").on("click", blueAttack);
+// How do I re-activate droppable on the square left by the attacker?
 
 const redAttack = () => {
 console.log("Red is attacking!")
@@ -333,13 +352,32 @@ $(".blue-startingPiece").droppable({
            console.log($(this).attr('rank'));  
         }
     })
-}
+ }
 
 $(".red-attack-btn").on("click", redAttack);
 
+// MOVE FUNCTIONS
+
+// FIRST check to see if ui-droppable-disabled
+    // if square is not occupied by anything, call moveNoAttack
+    // if square is occupied by opposing piece
+
+// const blueMove = () =>{
+// $(".blue-startingPiece").draggable({
+//     revert: function(target, ui){
+//         if (target.attr($(ui.droppable-disabled)) === true){ // get the piece residing at that x and y
+//             blueAttack();
+//         } else {
+//             moveNoAttack();
+//         }
+//     },
+//     snap: true,
+//     snapMode: "inner",
+//     snapTolerance: 30
+// });
+// }
+
 // Attack function built into droppable, accepts opposite color's pieces
-     // compare ranks of pieces
-    // .remove lower rank
     // switch droppable back on square left
     // append captured piece to where ever I want to put it
 // Switch draggable and droppable at end of each attack
