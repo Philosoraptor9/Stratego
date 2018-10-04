@@ -2,18 +2,18 @@
 // Game pieces - class, fit inside game squares, number/logo on each
     // Start out on bottom (2 rows of 10?) DONE
     // label all pieces- 
-        // 8 Scouts (rank - 9) DONE
-        // 6 Bombs (rank - B) DONE
-        // 5 Miners (rank - 8) DONE
-        // 4 Seargents (rank - 7) DONE
-        // 4 Lieutenants (rank - 6) DONE
-        // 4 Captains (rank - 5) DONE
-        // 3 Majors (rank - 4) DONE
-        // 2 Colonels (rank - 3) DONE
-        // 1 General (rank - 2) DONE
-        // 1 Marshal (rank - 1) DONE
-        // 1 Spy (rank - S) DONE
-        // 1 Flag (rank - F) DONE
+        // 8 Scouts (rank - 2) DONE
+        // 6 Bombs (rank - 11) DONE
+        // 5 Miners (rank - 3) DONE
+        // 4 Seargents (rank - 4) DONE
+        // 4 Lieutenants (rank - 5) DONE
+        // 4 Captains (rank - 6) DONE
+        // 3 Majors (rank - 7) DONE
+        // 2 Colonels (rank - 8) DONE
+        // 1 General (rank - 9) DONE
+        // 1 Marshal (rank - 10) DONE
+        // 1 Spy (rank - 1) DONE
+        // 1 Flag (rank - 0) DONE
     // can be clicked and dragged by user, placed anywhere on first 4 rows
     // player 2 cannot see player 1 set their pieces 
     // once all pieces are placed, game start
@@ -31,58 +31,41 @@
 
 let game = {};
 
-let gameSquares = {};
+let gameBoard;
 
-class Soldier {
-    constructor(name, rank){
-    this.name = name,
-    this.rank = rank;
-    }
-    mobility() {
-        console.log(`${this.name} IS MOVING`)
-    }
+const ranks = {
+    bomb: 11,
+    marshal: 10,
+    general: 9,
+    colonel: 8,
+    major: 7,
+    captain: 6,
+    lieutenant: 5,
+    seargent: 4,
+    miner: 3,
+    scout: 2,
+    spy: 1,
+    flag: 0
 }
+
+// Object for ranks
 
 // Mobility (method?) for all will be same - 1 space forward, back, left, or right. 
-    // Only exception is Scout (extend class?) who can move any amount of spaces in same directions
+    // Only exception is Scout who can move any amount of spaces in same directions
     // Class that extends 'Soldier' for multiple-piece ranks? i.e. everything except General/Marshal/Spy
 
-const marshal = new Soldier("Marshal", 1);
-const general = new Soldier("General", 2);
-const colonel = new Soldier("Colonel", 3);
-const major = new Soldier("Major", 4);
-const captain = new Soldier("Captain", 5);
-const lieutenant = new Soldier("Lieutenant", 6);
-const seargent = new Soldier("Seargent", 7);
-const miner = new Soldier("Miner", 8);
-const scout = new Soldier("Scout", 9);
-const spy = new Soldier("Spy", 10)
-
-
-class Device {
-    constructor(name, rank){
-        this.name = name,
-        this.rank = rank;
-    }
-    effect() {
-        console.log(`YOU RAN INTO ${this.name}`)
-    }
-}
-
-const flag = new Device("Flag", 0);
-const bomb = new Device("Bomb", 11);
-
-// Mobility for these will be 0 or null
+// These pieces can't move once set
 // Rank for Flag will be 0 since it can be captured by all Soldier pieces, and include a method to end game
 // Rank for Bomb will transcend all soldier pieces except Miner
 
 // Questions for Ryan:
+    // How do I link js objects with html elements?
     // What is the best way to store values for gameplay? I was thinking an array that contains each square,
     // whether or not it is occupied, and if it is, the piece occupying it. Is this possible and/or practical?
-    // Would an array or an object work best? Would I need multiple?
     // There are several scenarios for a tie game. Could I write these as functions and set event listeners to 
     // call on them when certain piece combinations and/or gameboard configurations occur?
     // How do I hide one side's pieces while the other side is setting up?
+    // How do I make pieces shrink with gameboard when page is collapsed?
     // I am assuming this will be player vs. computer. If not... lots more questions!
 
 // GENERATE GAME BOARD FUNCTION
@@ -211,7 +194,6 @@ $(".blue-side").droppable({
         //now, give the PIECE the new x and y coordinates of the square its being dropped onto
         $(ui.draggable).attr('x', $(this).attr('x'))
         $(ui.draggable).attr('y', $(this).attr('y'))
-        console.log($(ui.draggable))
         }
     });
 }
@@ -240,7 +222,6 @@ $(".red-side").droppable({
         })
         $(ui.draggable).attr('x', $(this).attr('x'))
         $(ui.draggable).attr('y', $(this).attr('y'))
-        console.log($(ui.draggable))
         }
     });
 }
@@ -264,7 +245,7 @@ $(".pieces").draggable({
     accept: ".blue-startingPiece, .red-startingPiece",
     tolerance: "fit",
     greedy: true,
-    drop: function(event, ui){
+    drop: function(target, ui){
         $(this).droppable("disable")
         let formerX = $(ui.draggable).attr('x');
         let formerY = $(ui.draggable).attr('y');
@@ -275,21 +256,40 @@ $(".pieces").draggable({
         })
         $(ui.draggable).attr('x', $(this).attr('x'))
         $(ui.draggable).attr('y', $(this).attr('y'))
-        console.log($(ui.draggable))
+        console.log(target);
+        console.log($(ui.draggable));
         }
     });
 }
 
-// Add if condition to check if all blue-side and red-side are fully set, display message if not
+// ATTACK FUNCTIONS
+// const blueAttack = () => {
+// $(".blue-startingPiece").draggable({
+//         revert: "invalid",
+//         snap: true,
+//         snapMode: "inner",
+//         snapTolerance: 30
+// });
+
+// $(".red-startingPiece").droppable({
+//     accept: ".blue-startingPiece",
+//     tolerance: "fit",
+//     greedy: true,
+//     drop: function(target, ui){
+//         let attacker = $(ui.draggable).attr
+//             console.log(target)
+//             // compare ranks of pieces
+//             // .remove lower rank
+//             // switch droppable back on square left
+//             // append captured piece to where ever I want to put it
+//     }
+// })
+// }
+
+// Attack function built into droppable, accepts opposite color's pieces
+// Switch draggable and droppable at end of each attack
 
 $(".btn-primary").on("click", startGame);
-
-// Pieces
-    // Objects: class for immovable (flag & bomb), class for movable (all other pieces)... separate Scouts?
-    // Array for each player's pieces in play
-    // Array for each player's captured pieces
-    // Array for occupied squares on the board
-    // Array for unoccupied squares on the board
 
 // Move if checks 
     // if player moves to a space with piece on same team already there, not allowed, choose another move
