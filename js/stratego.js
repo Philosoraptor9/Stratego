@@ -100,7 +100,9 @@ for (let i = 1; i < 21; i++){
         gamePiece.addClass(`blue-startingPiece-${i}-${j}`);
         $(`.blue-pieces-column-${i}`).append(gamePiece);
         $('.blue-startingPiece-1-2').addClass('general');
+        $('.blue-startingPiece-1-2').attr("rank", ranks.general);
         $('.blue-startingPiece-1-1').addClass('marshal');
+        $('.blue-startingPiece-1-1').attr("rank", ranks.marshal);
         $('.blue-startingPiece-2-2').addClass('spy');
         $('.blue-startingPiece-2-1').addClass('flag');
         $(`.blue-startingPiece-3-${j}`).addClass('colonel');
@@ -133,7 +135,9 @@ for (let a = 1; a < 21; a++){
         gamePiece.addClass(`red-startingPiece-${a}-${b}`);
         $(`.red-pieces-column-${a}`).append(gamePiece);
         $('.red-startingPiece-1-2').addClass('general');
+        $('.red-startingPiece-1-2').attr("rank", ranks.general);
         $('.red-startingPiece-1-1').addClass('marshal');
+        $('.red-startingPiece-1-1').attr("rank", ranks.marshal);
         $('.red-startingPiece-2-2').addClass('spy');
         $('.red-startingPiece-2-1').addClass('flag');
         $(`.red-startingPiece-3-${b}`).addClass('colonel');
@@ -256,40 +260,89 @@ $(".pieces").draggable({
         })
         $(ui.draggable).attr('x', $(this).attr('x'))
         $(ui.draggable).attr('y', $(this).attr('y'))
-        console.log(target);
-        console.log($(ui.draggable));
+        // console.log(target);
+        // console.log($(ui.draggable));
         }
     });
 }
 
-// ATTACK FUNCTIONS
-// const blueAttack = () => {
-// $(".blue-startingPiece").draggable({
-//         revert: "invalid",
-//         snap: true,
-//         snapMode: "inner",
-//         snapTolerance: 30
-// });
+$(".btn-primary").on("click", startGame);
 
-// $(".red-startingPiece").droppable({
-//     accept: ".blue-startingPiece",
-//     tolerance: "fit",
-//     greedy: true,
-//     drop: function(target, ui){
-//         let attacker = $(ui.draggable).attr
-//             console.log(target)
-//             // compare ranks of pieces
-//             // .remove lower rank
-//             // switch droppable back on square left
-//             // append captured piece to where ever I want to put it
-//     }
-// })
-// }
+
+// ATTACK FUNCTIONS
+
+const blueAttack = () => {
+console.log("Blue is attacking!")
+$(".blue-startingPiece").draggable({
+        revert: "invalid",
+        snap: true,
+        snapMode: "inner",
+        snapTolerance: 30
+});
+
+$(".red-startingPiece").droppable({
+    accept: ".blue-startingPiece",
+    tolerance: "fit",
+    greedy: true,
+    drop: function(event, ui){
+        let attacker = $(ui.draggable);
+        let defender = $(this);
+        if (parseInt(attacker.attr("rank")) > parseInt(defender.attr("rank"))) {
+            $(this).remove();
+        } else if (parseInt(attacker.attr("rank")) === parseInt(defender.attr("rank"))) {
+            $(this).remove();
+            $(ui.draggable).remove();
+        } else {
+            $(ui.draggable).remove();
+        }
+           console.log(event.target);    
+           console.log(attacker.attr("rank"));
+           console.log($(this).attr('rank'));  
+        }
+    })
+}
+
+$(".blue-attack-btn").on("click", blueAttack);
+
+const redAttack = () => {
+console.log("Red is attacking!")
+$(".red-startingPiece").draggable({
+        revert: "invalid",
+        snap: true,
+        snapMode: "inner",
+        snapTolerance: 30
+});
+
+$(".blue-startingPiece").droppable({
+    accept: ".red-startingPiece",
+    tolerance: "fit",
+    greedy: true,
+    drop: function(event, ui){
+        let attacker = $(ui.draggable);
+        let defender = $(this);
+        if (parseInt(attacker.attr("rank")) > parseInt(defender.attr("rank"))) {
+            $(this).remove();
+        } else if (parseInt(attacker.attr("rank")) === parseInt(defender.attr("rank"))) {
+            $(this).remove();
+            $(ui.draggable).remove();
+        } else {
+            $(ui.draggable).remove();
+        }
+           console.log(event.target);    
+           console.log(attacker.attr("rank"));
+           console.log($(this).attr('rank'));  
+        }
+    })
+}
+
+$(".red-attack-btn").on("click", redAttack);
 
 // Attack function built into droppable, accepts opposite color's pieces
+     // compare ranks of pieces
+    // .remove lower rank
+    // switch droppable back on square left
+    // append captured piece to where ever I want to put it
 // Switch draggable and droppable at end of each attack
-
-$(".btn-primary").on("click", startGame);
 
 // Move if checks 
     // if player moves to a space with piece on same team already there, not allowed, choose another move
