@@ -1,8 +1,15 @@
+h1 {
+    font-family: 'Lobster', cursive;
+}
+body {
+    background-color: FFE794;
+}
 .btn {
     display: flex;
     margin: 3px;
     padding: 3px;
     border-style: solid;
+    align-items: right;
 }
 
 .blue-btn{

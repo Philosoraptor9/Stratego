@@ -40,7 +40,7 @@ for(let y = 1; y < 11; y++){
     }
 }
 
-// GENERATE PIECES FUNCTIONS
+// GENERATE PIECES, SET RANKS FUNCTIONS
 
 for (let i = 1; i < 21; i++){
     $('.pieces').append(`<div class ='blue-pieces-column blue-pieces-column-${i}'></div>`)
@@ -171,7 +171,7 @@ const dropCheck = (piece) => {
 
 const moveNoAttack = () => {
 $(".pieces").draggable({
-    revert: "invalid",
+    revert: "invalid", 
     snap: true,
     snapMode: "inner",
     snapTolerance: 30
@@ -186,6 +186,13 @@ $(".square").droppable({
         }
     });
 }
+
+
+const gameReset = () =>{
+    window.confirm("Game Over. Would you like to restart?")
+    window.location.reload(true);
+}
+
 
 // SET PIECES FUNCTIONS
 
@@ -271,9 +278,8 @@ $(".red-startingPiece").droppable({
             $(this).remove();
             dropCheck(ui.draggable);
         } else if (parseInt(attacker.attr("rank")) === parseInt(defender.attr("rank"))) {
-            $(this).remove();
             $(ui.draggable).remove();
-            dropCheck();
+            dropCheck(defender);
         } else {
             $(ui.draggable).remove();
             dropCheck(defender);
@@ -307,9 +313,8 @@ $(".blue-startingPiece").droppable({
             $(this).remove();
             dropCheck(ui.draggable);
         } else if (parseInt(attacker.attr("rank")) === parseInt(defender.attr("rank"))) {
-            $(this).remove();
             $(ui.draggable).remove();
-            dropCheck();
+            dropCheck(defender);
         } else {
             $(ui.draggable).remove();
             dropCheck(defender);
@@ -323,26 +328,17 @@ $(".blue-startingPiece").droppable({
 
 $(".red-attack-btn").on("click", redAttack);
 
+const gameOver = () => {
+    setTimeout (function(){
+        gameReset()
+         }, 4500);
+}
+
 // MOVE FUNCTIONS
 
 // FIRST check to see if ui-droppable-disabled
     // if square is not occupied by anything, call moveNoAttack
-    // if square is occupied by opposing piece
-
-// const blueMove = () =>{
-// $(".blue-startingPiece").draggable({
-//     revert: function(target, ui){
-//         if (target.attr($(ui.droppable-disabled)) === true){ // get the piece residing at that x and y
-//             blueAttack();
-//         } else {
-//             moveNoAttack();
-//         }
-//     },
-//     snap: true,
-//     snapMode: "inner",
-//     snapTolerance: 30
-// });
-// }
+    // if square is occupied by opposing piece, call [color]Attack
 
 // Move if checks 
     // if player moves to a space with piece on same team already there, not allowed, choose another move
